@@ -24,6 +24,7 @@ public class Signupview extends JFrame {
 	private JTextField tfemail;
 	private JPasswordField passwordField;
 	private JPasswordField passwordckField;
+	private JTextField tfbirth;
 
 	/**
 	 * Launch the application.
@@ -33,6 +34,10 @@ public class Signupview extends JFrame {
 	 * Create the frame.
 	 */
 	public Signupview() {
+		SignupViewGui();
+
+	}
+	public void SignupViewGui() {
 		setTitle("\uB3C4\uC11C\uAD00 \uAD00\uB9AC \uD504\uB85C\uADF8\uB7A8");
 		
 		
@@ -42,11 +47,11 @@ public class Signupview extends JFrame {
 		setBackground(Color.DARK_GRAY);
 
 		JButton btnok = new JButton("\uD655\uC778");
-		btnok.setBounds(97, 370, 97, 23);
+		btnok.setBounds(97, 401, 97, 23);
 		getContentPane().add(btnok);
 
 		JButton btncancel = new JButton("\uCDE8\uC18C");
-		btncancel.setBounds(251, 370, 97, 23);
+		btncancel.setBounds(251, 401, 97, 23);
 		getContentPane().add(btncancel);
 
 		JLabel lbid = new JLabel("\uC544\uC774\uB514");
@@ -62,15 +67,15 @@ public class Signupview extends JFrame {
 		getContentPane().add(lbpwdck);
 
 		JLabel lbname = new JLabel("\uC774\uB984");
-		lbname.setBounds(108, 199, 36, 15);
+		lbname.setBounds(108, 195, 36, 15);
 		getContentPane().add(lbname);
 
 		JLabel lbtel = new JLabel("\uC804\uD654\uBC88\uD638");
-		lbtel.setBounds(108, 238, 58, 15);
+		lbtel.setBounds(108, 265, 58, 15);
 		getContentPane().add(lbtel);
 
 		JLabel lbemail = new JLabel("\uC774\uBA54\uC77C");
-		lbemail.setBounds(108, 274, 43, 15);
+		lbemail.setBounds(108, 300, 43, 15);
 		getContentPane().add(lbemail);
 
 		tfid = new JTextField();
@@ -79,18 +84,18 @@ public class Signupview extends JFrame {
 		tfid.setColumns(10);
 
 		tfname = new JTextField();
-		tfname.setBounds(214, 196, 116, 21);
+		tfname.setBounds(214, 190, 116, 21);
 		getContentPane().add(tfname);
 		tfname.setColumns(10);
 
 		tftel = new JTextField();
 		tftel.setColumns(10);
-		tftel.setBounds(214, 235, 116, 21);
+		tftel.setBounds(214, 260, 116, 21);
 		getContentPane().add(tftel);
 
 		tfemail = new JTextField();
 		tfemail.setColumns(10);
-		tfemail.setBounds(214, 271, 116, 21);
+		tfemail.setBounds(214, 295, 116, 21);
 		getContentPane().add(tfemail);
 
 		passwordField = new JPasswordField();
@@ -98,23 +103,25 @@ public class Signupview extends JFrame {
 		getContentPane().add(passwordField);
 
 		passwordckField = new JPasswordField();
-		passwordckField.setBounds(214, 156, 116, 21);
+		passwordckField.setBounds(214, 153, 116, 21);
 		getContentPane().add(passwordckField);
 
 		JRadioButton rbtngender1 = new JRadioButton("\uB0A8");
 		rbtngender1.setSelected(true);
-		rbtngender1.setBounds(230, 309, 48, 23);
+		rbtngender1.setBounds(226, 330, 48, 23);
 		getContentPane().add(rbtngender1);
 
 		JRadioButton rbtngender2 = new JRadioButton("\uC5EC");
-		rbtngender2.setBounds(282, 309, 48, 23);
+		rbtngender2.setBounds(282, 330, 48, 23);
 		getContentPane().add(rbtngender2);
+		
+		//라이도 버튼 그룹 생성
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(rbtngender1);
 		bg.add(rbtngender2);
 
 		JLabel lbgender = new JLabel("\uC131\uBCC4");
-		lbgender.setBounds(108, 313, 36, 15);
+		lbgender.setBounds(108, 335, 36, 15);
 		getContentPane().add(lbgender);
 
 		JLabel lbtitle = new JLabel("\uD68C\uC6D0\uAC00\uC785");
@@ -127,12 +134,38 @@ public class Signupview extends JFrame {
 		flowLayout.setAlignOnBaseline(true);
 		panel.setBounds(0, 0, 10, 10);
 		getContentPane().add(panel);
+		
+		JLabel lbbirth = new JLabel("\uC0DD\uB144\uC6D4\uC77C");
+		lbbirth.setBounds(108, 230, 58, 15);
+		getContentPane().add(lbbirth);
+		
+		tfbirth = new JTextField();
+		tfbirth.setBounds(214, 225, 116, 21);
+		getContentPane().add(tfbirth);
+		tfbirth.setColumns(10);
 
 		btnok.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				MemberDAO mbd = new MemberDAO();
+				MemberVo mbv = new MemberVo();
+				
+				mbv.setId(tfid.getText());
+				mbv.setPwd(passwordField.getText());
+				mbv.setName(tfname.getText());
+				mbv.setTel(tftel.getText());
+				mbv.setEmail(tfemail.getText());
+				mbv.setBirth(tfbirth.getText());
+				
+				if(rbtngender1.isSelected()==true) {
+					mbv.setGender(rbtngender1.getText());
+					
+				}else if(rbtngender2.isSelected()==true) {
+					mbv.setGender(rbtngender2.getText());
+				}
+				mbd.insertData(mbv);
+				
 				JOptionPane.showMessageDialog(getContentPane(),"회원 가입이 완료되었습니다!", "Message",
 						JOptionPane.INFORMATION_MESSAGE);
 
@@ -152,6 +185,6 @@ public class Signupview extends JFrame {
 		});
 
 		setVisible(true);
-
+		
 	}
 }

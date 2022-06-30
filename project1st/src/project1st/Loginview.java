@@ -10,6 +10,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -72,32 +73,48 @@ public class Loginview extends JFrame {
 		jg.add(rbtna);
 		jg.add(rbtnp);
 		
-		
+		//로그인 버튼 클릭 이벤트
 		btnlogin.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println(tfid.getText()+" "+passwordField.getText());
+				String adminId = "admin"; 
+				String adminPwd = "admin"; 
 				MemberVo mbv = new MemberVo();
 				MemberDAO mbd = new MemberDAO();
+				System.out.println(rbtna.getText());
+				System.out.println(rbtnp.getText());
 				
-				mbd.LoginData(tfid.getText(),passwordField.getText());
-				
-				if((tfid.getText() == mbv.getId()) 
-						&& (passwordField.getText() == mbv.getPwd()) ) {
-					System.out.println("로그인 완료");
+				if((tfid.getText().equals(adminId) && passwordField.getText().equals(adminPwd))
+						&& (rbtna.isSelected()==true)) {
+					JOptionPane.showMessageDialog(getContentPane(),"관리자 로그인 완료", "Message",
+							JOptionPane.INFORMATION_MESSAGE);
+					
 					dispose();
 					new Library();
-				}else if((tfid.getText() == mbv.getId()) 
-						&& (passwordField.getText() != mbv.getPwd())) {
-					System.out.println("비밀번호가 틀렸습니다.");
-				}else if((tfid.getText() != mbv.getId()) 
-					&& (passwordField.getText() == mbv.getPwd())) {
-					System.out.println("아이디가 틀렸습니다.");
-				}else {
-					System.out.println("아이디와 비밀번호를 확인해주세요");
+					
+				}else if((tfid.getText()==adminId && passwordField.getText()==adminPwd)
+						&& (rbtna.isSelected()==false)) {
+					JOptionPane.showMessageDialog(getContentPane(),"아이디와 비밀번호 확인하세요1", "Message",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
+				
+				else if((mbd.LoginData(tfid.getText(),passwordField.getText())==1)
+						&& (rbtnp.isSelected()==true)) {
+					JOptionPane.showMessageDialog(getContentPane(),"로그인 완료", "Message",
+							JOptionPane.INFORMATION_MESSAGE);
+					
+					dispose();
+					new Library();
+				
+				}else {
+					JOptionPane.showMessageDialog(getContentPane(),"아이디와 비밀번호를 확인하세요", "Message",
+							JOptionPane.INFORMATION_MESSAGE);
+					
+				}
+				
+				
 			}
 		});
 		

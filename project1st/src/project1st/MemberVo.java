@@ -8,7 +8,7 @@ public class MemberVo {
 	private String tel;
 	private String email;
 	private String gender;
-	private int birth;
+	private String birth;
 	
 	public MemberVo() {
 		
@@ -16,7 +16,7 @@ public class MemberVo {
 	
 	
 	public MemberVo(String id, String pwd, String pwdck, String name, String tel, String email, String gender,
-			int birth) {
+			String birth) {
 		
 		this.id = id;
 		this.pwd = pwd;
@@ -84,11 +84,11 @@ public class MemberVo {
 		this.gender = gender;
 	}
 
-	public int getBirth() {
+	public String getBirth() {
 		return birth;
 	}
 
-	public void setBirth(int birth) {
+	public void setBirth(String birth) {
 		this.birth = birth;
 	}
 	
