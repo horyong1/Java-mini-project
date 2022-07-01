@@ -26,13 +26,7 @@ public class Signupview extends JFrame {
 	private JPasswordField passwordckField;
 	private JTextField tfbirth;
 
-	/**
-	 * Launch the application.
-	 */
 
-	/**
-	 * Create the frame.
-	 */
 	public Signupview() {
 		SignupViewGui();
 
@@ -115,11 +109,13 @@ public class Signupview extends JFrame {
 		rbtngender2.setBounds(282, 330, 48, 23);
 		getContentPane().add(rbtngender2);
 		
-		//라이도 버튼 그룹 생성
+		//라디오 버튼 그룹 생성------------------
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(rbtngender1);
 		bg.add(rbtngender2);
-
+		
+		
+		
 		JLabel lbgender = new JLabel("\uC131\uBCC4");
 		lbgender.setBounds(108, 335, 36, 15);
 		getContentPane().add(lbgender);
@@ -143,7 +139,9 @@ public class Signupview extends JFrame {
 		tfbirth.setBounds(214, 225, 116, 21);
 		getContentPane().add(tfbirth);
 		tfbirth.setColumns(10);
-
+		
+		
+		//회원가입 확인 기능
 		btnok.addActionListener(new ActionListener() {
 
 			@Override
@@ -166,14 +164,15 @@ public class Signupview extends JFrame {
 				}
 				mbd.insertData(mbv);
 				
-				JOptionPane.showMessageDialog(getContentPane(),"회원 가입이 완료되었습니다!", "Message",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(getContentPane(),"회원 가입이 완료되었습니다!",
+						"Message",JOptionPane.INFORMATION_MESSAGE);
 
 				dispose();
 				new Loginview();
 			}
 		});
-
+		
+		//취소버튼 기능---------------------------------------
 		btncancel.addActionListener(new ActionListener() {
 
 			@Override
@@ -183,7 +182,7 @@ public class Signupview extends JFrame {
 				new Loginview();
 			}
 		});
-
+		
 		setVisible(true);
 		
 	}
