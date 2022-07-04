@@ -2,23 +2,23 @@ package project1st;
 
 
 
+import java.awt.Button;
 import java.awt.Font;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 
 
 public class Loginview extends JFrame {
-	private JTextField tfid;
-	private JPasswordField passwordField;
+	private TextField tfid;
+	private TextField passwordField;
 
 	/**
 	 * Create the frame.
@@ -38,7 +38,7 @@ public class Loginview extends JFrame {
 		lbid.setBounds(35, 79, 45, 15);
 		getContentPane().add(lbid);
 		
-		tfid = new JTextField();
+		tfid = new TextField();
 		tfid.setBounds(92, 76, 116, 21);
 		getContentPane().add(tfid);
 		tfid.setColumns(10);
@@ -47,25 +47,18 @@ public class Loginview extends JFrame {
 		lbpwd.setBounds(24, 118, 56, 15);
 		getContentPane().add(lbpwd);
 		
-		passwordField = new JPasswordField();
+		passwordField = new TextField();
 		passwordField.setBounds(92, 115, 116, 21);
 		getContentPane().add(passwordField);
-		
-		JButton btnlogin = new JButton("\uB85C\uADF8\uC778");
-		btnlogin.setBounds(220, 70, 92, 32);
-		getContentPane().add(btnlogin);
-		
-		JButton btnsignup = new JButton("\uD68C\uC6D0\uAC00\uC785");
-		btnsignup.setBounds(220, 114, 92, 23);
-		getContentPane().add(btnsignup);
+		passwordField.setEchoChar('*');
 		
 		JRadioButton rbtnp = new JRadioButton("\uAC1C\uC778");
 		rbtnp.setSelected(true);
-		rbtnp.setBounds(71, 42, 56, 23);
+		rbtnp.setBounds(91, 42, 56, 23);
 		getContentPane().add(rbtnp);
 		
 		JRadioButton rbtna = new JRadioButton("\uAD00\uB9AC\uC790");
-		rbtna.setBounds(129, 42, 70, 23);
+		rbtna.setBounds(149, 42, 70, 23);
 		getContentPane().add(rbtna);
 		setVisible(true);
 		
@@ -73,7 +66,14 @@ public class Loginview extends JFrame {
 		jg.add(rbtna);
 		jg.add(rbtnp);
 		
-		//로그인 버튼 클릭 이벤트
+		Button btnlogin = new Button("\uB85C\uADF8\uC778");
+		btnlogin.setBounds(224, 68, 76, 41);
+		getContentPane().add(btnlogin);
+		
+		Button btnsignup = new Button("\uD68C\uC6D0\uAC00\uC785");
+		btnsignup.setBounds(224, 118, 76, 23);
+		getContentPane().add(btnsignup);
+		
 		btnlogin.addActionListener(new ActionListener() {
 			
 			@Override
@@ -83,6 +83,7 @@ public class Loginview extends JFrame {
 				String adminPwd = "admin"; 
 				MemberVo mbv = new MemberVo();
 				MemberDAO mbd = new MemberDAO();
+				
 				System.out.println(rbtna.getText());
 				System.out.println(rbtnp.getText());
 				
@@ -93,6 +94,7 @@ public class Loginview extends JFrame {
 					
 					dispose();
 					new Library();
+					
 					
 				}else if((tfid.getText()==adminId && passwordField.getText()==adminPwd)
 						&& (rbtna.isSelected()==false)) {
@@ -113,14 +115,8 @@ public class Loginview extends JFrame {
 							JOptionPane.INFORMATION_MESSAGE);
 					
 				}
-				
-				
 			}
 		});
-		
-		
-		
-		
 		
 		
 		btnsignup.addActionListener(new ActionListener() {
@@ -128,12 +124,15 @@ public class Loginview extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				dispose();
 				new Signupview();
 			}
-		});
+		});;
+		
 		
 		setVisible(true);
+		
+		
 
 	}
 }

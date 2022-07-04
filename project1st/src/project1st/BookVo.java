@@ -6,8 +6,16 @@ public class BookVo {
 	private String title;
 	private String author;
 	private String gendre;
+	private String publisher;
 	private String publication_date;
 	private String purchase_date;
+	
+	public String getPublisher() {
+		return publisher;
+	}
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
 	
 	public int getBook_id() {
 		return book_id;

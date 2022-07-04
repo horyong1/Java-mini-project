@@ -27,7 +27,7 @@ public class MemberDAO {
 		rs = null;
 		
 		try {
-			connDB();
+			//connDB();
 			
 			
 			
@@ -213,7 +213,7 @@ public class MemberDAO {
 			
 			rs = pstmt.executeQuery();
 			
-			if(rs.next()) {
+			while(rs.next()) {
 			MemberVo mbv = new MemberVo();
 			String id1 = rs.getString("id");
 			String pwd1 = rs.getString("pwd");

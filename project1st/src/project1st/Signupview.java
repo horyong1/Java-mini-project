@@ -1,30 +1,22 @@
 package project1st;
 
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 
 public class Signupview extends JFrame {
 	private JFrame jf;
-	private JTextField tfid;
-	private JTextField tfname;
-	private JTextField tftel;
-	private JTextField tfemail;
-	private JPasswordField passwordField;
-	private JPasswordField passwordckField;
-	private JTextField tfbirth;
 
 
 	public Signupview() {
@@ -40,11 +32,7 @@ public class Signupview extends JFrame {
 		getContentPane().setLayout(null);
 		setBackground(Color.DARK_GRAY);
 
-		JButton btnok = new JButton("\uD655\uC778");
-		btnok.setBounds(97, 401, 97, 23);
-		getContentPane().add(btnok);
-
-		JButton btncancel = new JButton("\uCDE8\uC18C");
+		Button btncancel = new Button("\uCDE8\uC18C");
 		btncancel.setBounds(251, 401, 97, 23);
 		getContentPane().add(btncancel);
 
@@ -72,34 +60,6 @@ public class Signupview extends JFrame {
 		lbemail.setBounds(108, 300, 43, 15);
 		getContentPane().add(lbemail);
 
-		tfid = new JTextField();
-		tfid.setBounds(214, 83, 116, 21);
-		getContentPane().add(tfid);
-		tfid.setColumns(10);
-
-		tfname = new JTextField();
-		tfname.setBounds(214, 190, 116, 21);
-		getContentPane().add(tfname);
-		tfname.setColumns(10);
-
-		tftel = new JTextField();
-		tftel.setColumns(10);
-		tftel.setBounds(214, 260, 116, 21);
-		getContentPane().add(tftel);
-
-		tfemail = new JTextField();
-		tfemail.setColumns(10);
-		tfemail.setBounds(214, 295, 116, 21);
-		getContentPane().add(tfemail);
-
-		passwordField = new JPasswordField();
-		passwordField.setBounds(214, 118, 116, 21);
-		getContentPane().add(passwordField);
-
-		passwordckField = new JPasswordField();
-		passwordckField.setBounds(214, 153, 116, 21);
-		getContentPane().add(passwordckField);
-
 		JRadioButton rbtngender1 = new JRadioButton("\uB0A8");
 		rbtngender1.setSelected(true);
 		rbtngender1.setBounds(226, 330, 48, 23);
@@ -121,8 +81,8 @@ public class Signupview extends JFrame {
 		getContentPane().add(lbgender);
 
 		JLabel lbtitle = new JLabel("\uD68C\uC6D0\uAC00\uC785");
-		lbtitle.setFont(new Font("굴림", Font.PLAIN, 21));
-		lbtitle.setBounds(177, 22, 80, 41);
+		lbtitle.setFont(new Font("굴림", Font.BOLD, 21));
+		lbtitle.setBounds(177, 22, 97, 41);
 		getContentPane().add(lbtitle);
 		
 		JPanel panel = new JPanel();
@@ -135,16 +95,36 @@ public class Signupview extends JFrame {
 		lbbirth.setBounds(108, 230, 58, 15);
 		getContentPane().add(lbbirth);
 		
-		tfbirth = new JTextField();
-		tfbirth.setBounds(214, 225, 116, 21);
+		TextField tfid = new TextField();
+		tfid.setBounds(214, 78, 116, 23);
+		getContentPane().add(tfid);
+		
+		TextField passwordField = new TextField();
+		passwordField.setBounds(214, 113, 116, 23);
+		getContentPane().add(passwordField);
+		
+		TextField passwordckField = new TextField();
+		passwordckField.setBounds(214, 151, 116, 23);
+		getContentPane().add(passwordckField);
+		
+		TextField tfname = new TextField();
+		tfname.setBounds(214, 187, 116, 23);
+		getContentPane().add(tfname);
+		
+		TextField tfbirth = new TextField();
+		tfbirth.setBounds(214, 222, 116, 23);
 		getContentPane().add(tfbirth);
-		tfbirth.setColumns(10);
 		
+		TextField tftel = new TextField();
+		tftel.setBounds(214, 257, 116, 23);
+		getContentPane().add(tftel);
 		
-		//회원가입 확인 기능
+		TextField tfemail = new TextField();
+		tfemail.setBounds(214, 292, 116, 23);
+		getContentPane().add(tfemail);
+		
+		Button btnok = new Button("\uD655\uC778");
 		btnok.addActionListener(new ActionListener() {
-
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				MemberDAO mbd = new MemberDAO();
 				MemberVo mbv = new MemberVo();
@@ -170,7 +150,10 @@ public class Signupview extends JFrame {
 				dispose();
 				new Loginview();
 			}
+			
 		});
+		btnok.setBounds(98, 401, 97, 23);
+		getContentPane().add(btnok);
 		
 		//취소버튼 기능---------------------------------------
 		btncancel.addActionListener(new ActionListener() {
