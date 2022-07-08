@@ -2,14 +2,30 @@ package project1st;
 
 public class BookVo {
 	private int book_id;
-	private int Amount;
+	private int amount;
 	private String title;
 	private String author;
-	private String gendre;
+	private String genre;
 	private String publisher;
 	private String publication_date;
 	private String purchase_date;
 	
+	public BookVo() {
+		
+	}
+	
+	
+	
+	public BookVo( String title, String author, String publisher,String genre,
+			String publication_date) {
+		
+		this.title = title;
+		this.author = author;
+		this.genre = genre;
+		this.publisher = publisher;
+		this.publication_date = publication_date;
+		
+	}
 	public String getPublisher() {
 		return publisher;
 	}
@@ -24,10 +40,10 @@ public class BookVo {
 		this.book_id = book_id;
 	}
 	public int getAmount() {
-		return Amount;
+		return amount;
 	}
 	public void setAmount(int amount) {
-		Amount = amount;
+		this.amount = amount;
 	}
 	public String getTitle() {
 		return title;
@@ -41,11 +57,11 @@ public class BookVo {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	public String getGendre() {
-		return gendre;
+	public String getGenre() {
+		return genre;
 	}
-	public void setGendre(String gendre) {
-		this.gendre = gendre;
+	public void setGenre(String genre) {
+		this.genre = genre;
 	}
 	public String getPublication_date() {
 		return publication_date;

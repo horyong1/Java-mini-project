@@ -19,18 +19,16 @@ public class MemberDAO {
 	private PreparedStatement  pstmt;
 	private ResultSet rs;
 
-	// 1. insert
+	// 1. insert ok
 	public int insertData(MemberVo vo) {
 
 		int result = 0;
-		pstmt = null;
-		rs = null;
+//		pstmt = null;
+//		rs = null;
 		
 		try {
-			//connDB();
-			
-			
-			
+			connDB();
+		
 			String query;
 
 			query = "insert into MEMBERDATA(id, pwd, name,tel,email,birth,gender)";
@@ -46,12 +44,12 @@ public class MemberDAO {
 			pstmt.setString(6, vo.getBirth());
 			pstmt.setString(7, vo.getGender());
 			
-			//rs = pstmt.executeQuery();
+			
 			
 			result = pstmt.executeUpdate();
 
 			pstmt.close();
-			
+			con.close();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -87,23 +85,25 @@ public class MemberDAO {
 		return result;
 	}
 
-	// 3.delete
+	// 3.delete ok
 	public int deleteData(String id, String pw) {
 		int result = 0;
 		String query;
 		try {
-			
+			connDB();
 
-			query = "delete MEMBERDATA where id=? and pw=?";
-			query += "where id=?";
-
+			query = "delete MEMBERDATA where id=? and pwd=?";
 			pstmt = con.prepareStatement(query);
-
+			
 			pstmt.setString(1, id);
 			pstmt.setString(2, pw);
 
-			result = pstmt.executeUpdate();
 
+
+			result = pstmt.executeUpdate();
+			
+			pstmt.close();
+			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -193,7 +193,7 @@ public class MemberDAO {
 		return lists;
 
 	}
-	//6. Login result 값 1로 반환하여 출력 
+	//6. Login result 값 1로 반환하여 출력 ok
 	public int LoginData(String id,String pwd) {
 		int result = 0;
 		String query;
@@ -222,6 +222,43 @@ public class MemberDAO {
 			}
 			
 			result = pstmt.executeUpdate();
+			rs.close();
+			
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	//아이디 중복 체크 ok
+	public int idCheck(String id) {
+		int result = 0;
+		String query;
+		
+		try {
+			con = null;
+			pstmt = null;
+			rs = null;
+			connDB();
+
+			query = "select ID FROM MEMBERDATA ";
+			query += "where ID= ? ";
+			pstmt = con.prepareStatement(query);
+
+			pstmt.setString(1, id);
+			
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) { 
+			MemberVo mbv = new MemberVo();
+			String id1 = rs.getString("id");
+			mbv.setId(id1);
+			
+			result = pstmt.executeUpdate();
+			}
+			
 			rs.close();
 			
 
