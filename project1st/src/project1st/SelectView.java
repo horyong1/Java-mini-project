@@ -10,6 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Button;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class SelectView extends JFrame {
 
@@ -40,31 +43,74 @@ public class SelectView extends JFrame {
 	public void selectview() {
 		JFrame frame = new JFrame("µµ¼­°ü °ü¸® ÇÁ·Î±×·¥");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 270, 266);
+		frame.setBounds(100, 100, 270, 307);
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.setLayout(null);
 
 		Button btnsearch = new Button("µµ¼­ °Ë»ö");
-		btnsearch.setBounds(31, 27, 188, 23);
+		btnsearch.setBounds(30, 63, 188, 23);
 		panel.add(btnsearch);
 
 		Button btnupdate = new Button("È¸¿ø ¼öÁ¤");
-		btnupdate.setBounds(31, 100, 188, 23);
+		btnupdate.setBounds(30, 136, 188, 23);
 		panel.add(btnupdate);
 
-		Button btnback = new Button("µµ¼­ ¹Ý³³");
-		btnback.setBounds(31, 62, 188, 23);
-		panel.add(btnback);
+		Button btnreturn = new Button("µµ¼­ ¹Ý³³");
+		btnreturn.setBounds(30, 98, 188, 23);
+		panel.add(btnreturn);
 
 		Button btnwithdrawal = new Button("È¸¿ø Å»Åð");
-		btnwithdrawal.setBounds(88, 194, 76, 23);
+		btnwithdrawal.setBounds(87, 230, 76, 23);
 		panel.add(btnwithdrawal);
 
 		Button btnout = new Button("·Î±× ¾Æ¿ô");
-		btnout.setBounds(31, 137, 188, 23);
+		btnout.setBounds(30, 173, 188, 23);
 		panel.add(btnout);
-
+		
+		//µµ¼­ °Ë»ö ±â´É
+		btnsearch.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				LibrarysearchView lb = new LibrarysearchView();
+				lb.setId(id);
+				lb.setPwd(pwd);
+				lb.booksearchGui();
+				frame.dispose();
+			}
+		});
+		//µµ¼­ ¹Ý³³ ±â´É
+		btnreturn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				LibraryReturnView lbr = new LibraryReturnView();
+				lbr.setId(id);
+				lbr.setPwd(pwd);
+				lbr.mainGui();
+				frame.dispose();
+			}
+		});
+		
+		//È¸¿ø¼öÁ¤ ±â´É
+		btnupdate.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				MemberupdateView mv = new MemberupdateView();
+				mv.setId(id);
+				mv.setPwd(pwd);
+				dispose();
+				mv.MemberupdateViewGui();
+			}
+		});;
+	
+		
+		//·Î±×¾Æ¿ô ±â´É
 		btnout.addActionListener(new ActionListener() {
 
 			@Override
@@ -79,17 +125,8 @@ public class SelectView extends JFrame {
 				}
 			}
 		});
-
-		btnsearch.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				frame.dispose();
-				new Library().booksearchGui();
-			}
-		});
-
+		
+		//È¸¿ø Å»Åð ±â´É
 		btnwithdrawal.addActionListener(new ActionListener() {
 
 			@Override
@@ -97,24 +134,33 @@ public class SelectView extends JFrame {
 				// TODO Auto-generated method stub
 				MemberDAO bd = new MemberDAO();
 				Loginview lv = new Loginview();
-				String id = getId();
-				String pwd = getPwd();
+				
 				System.out.println(id+" "+pwd);
 				int var = JOptionPane.showConfirmDialog(frame, "È¸¿øÅ»Åð ÇÏ½Ã°Ú½À´Ï±î?", "È¸¿øÅ»Åð", 
 						JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE, null);
 				
 				if (var == 0) {
-					bd.deleteData(id, pwd);
-					JOptionPane.showMessageDialog(frame,"È¸¿ø Å»Åð ¿Ï·á", "Message",
-							JOptionPane.INFORMATION_MESSAGE);
-					frame.dispose();
-					lv.mainView();
+					int var2 = JOptionPane.showConfirmDialog(frame, "Á¤¸» È¸¿øÅ»Åð ÇÏ½Ã°Ú½À´Ï±î?", "È¸¿øÅ»Åð", 
+							JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE, null);
+					if(var2==0) {
+						bd.deleteData(id, pwd);
+						JOptionPane.showMessageDialog(frame,"È¸¿ø Å»Åð ¿Ï·á", "Message",
+								JOptionPane.INFORMATION_MESSAGE);
+						frame.dispose();
+						lv.mainView();
+						
+					}
 				}
 			}
 
 		});
 
 		frame.getContentPane().add(panel);
+		
+		JLabel lbtop = new JLabel("\uBA54\uB274 \uC120\uD0DD");
+		lbtop.setFont(new Font("±¼¸²", Font.PLAIN, 24));
+		lbtop.setBounds(69, 10, 110, 35);
+		panel.add(lbtop);
 		frame.setVisible(true);
 	}
 }
