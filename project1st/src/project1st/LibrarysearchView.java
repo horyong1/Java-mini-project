@@ -1,6 +1,8 @@
 package project1st;
 
+import java.awt.Button;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -16,8 +18,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Button;
-import java.awt.Font;
+import javax.swing.border.MatteBorder;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
 
 public class LibrarysearchView extends JFrame {
 
@@ -31,7 +34,7 @@ public class LibrarysearchView extends JFrame {
 	private JTextField tfpublisher = null;
 	private JTextField tfgenre = null;
 	private JTextField tfpublication_date = null;
-	private Button btnsearch;
+	private JButton btnsearch;
 	private JFrame frame;
 	private JPanel panel;
 	private JScrollPane sp;
@@ -53,7 +56,7 @@ public class LibrarysearchView extends JFrame {
 	
 	
 	public LibrarysearchView() {
-		//booksearchGui();
+//		booksearchGui();
 	}
 
 	public void booksearchGui() {
@@ -63,12 +66,14 @@ public class LibrarysearchView extends JFrame {
 		BookDAO bd = new BookDAO();
 		BookSearchList bsl = new BookSearchList();
 
-		frame.setLocation(200, 200);
+	
 		frame.setPreferredSize(dim);
 		frame.getContentPane().setLayout(null);
 
 		panel = new JPanel();
-		panel.setBounds(0, 131, 784, 400);
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setBounds(12, 131, 760, 400);
+		frame.setLocation(500, 200);
 		frame.getContentPane().add(panel);
 		frame.pack();
 		frame.setVisible(true);
@@ -81,10 +86,12 @@ public class LibrarysearchView extends JFrame {
 		
 
 		lbsearch = new JLabel("도서 제목 : ");
+		lbsearch.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
 		lbsearch.setBounds(12, 103, 73, 15);
 		frame.getContentPane().add(lbsearch);
 
-		btnsearch = new Button("검색");
+		btnsearch = new JButton("검색");
+		btnsearch.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
 		btnsearch.setBounds(244, 100, 76, 23);
 		frame.getContentPane().add(btnsearch);
 		
@@ -101,45 +108,11 @@ public class LibrarysearchView extends JFrame {
 				// TODO Auto-generated method stub
 				panel.remove(sp);
 				if (tfsearch.getText().equals("")) {
-					result = null;
-					result = bsl.resultAll();
-					String[] header = { "도서 제목", "저자", "출판사", "장르", "출판일" };
-					model = new DefaultTableModel(result, header);
-					panel.setLayout(null);
-					table = new JTable(model);
-					sp = new JScrollPane(table);
-					sp.setBounds(12, 0, 760, 539);
-					panel.add(sp);
-					table.getTableHeader().setReorderingAllowed(false);
-					table.setModel(new DefaultTableModel(result, header) {
-						public boolean isCellEditable(int row, int column) {
-
-							return false;
-						}
-
-					});
+					BookAllList();
 					Clicked();
 				
 				} else if (!(tfsearch.getText().equals(""))) {
-					title = tfsearch.getText();
-					System.out.println(title);
-					result = null;
-					result = bsl.resultTitle(title);
-					String[] header = { "도서 제목", "저자", "출판사", "장르", "출판일" };
-					model = new DefaultTableModel(result, header);
-					panel.setLayout(null);
-					table = new JTable(model);
-					sp = new JScrollPane(table);
-					sp.setBounds(12, 0, 760, 539);
-					panel.add(sp);
-					table.getTableHeader().setReorderingAllowed(false);
-					table.setModel(new DefaultTableModel(result, header) {
-						public boolean isCellEditable(int row, int column) {
-							
-							return false;
-						}
-
-					});
+					BookselectList(tfsearch.getText());
 					Clicked();
 					
 				}
@@ -148,27 +121,12 @@ public class LibrarysearchView extends JFrame {
 
 		});
 
-		String[] header = { "도서 제목", "저자", "출판사", "장르", "출판일" };
-		result = bsl.resultAll();
-		model = new DefaultTableModel(result, header);
-		panel.setLayout(null);
-		table = new JTable(model);
-		sp = new JScrollPane(table);
-		sp.setBounds(12, 0, 760, 390);
-		panel.add(sp);
-		table.getTableHeader().setReorderingAllowed(false);
-		table.setModel(new DefaultTableModel(result, header) {
-			public boolean isCellEditable(int row, int column) {
-
-				return false;
-			}
-
-		});
-		
+		BookAllList();
 		Clicked();
 		
 		//대출 하기 버튼 기능 
-		Button btncheckout = new Button("대출하기");
+		JButton btncheckout = new JButton("대출하기");
+		btncheckout.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
 		btncheckout.setBounds(12, 537, 133, 49);
 		frame.getContentPane().add(btncheckout);
 		btncheckout.addActionListener(new ActionListener() {
@@ -181,7 +139,7 @@ public class LibrarysearchView extends JFrame {
 					JOptionPane.showMessageDialog(getContentPane(),"대출 하려는 책을 선택하세요", "Infomation",
 							JOptionPane.INFORMATION_MESSAGE);
 				}else {
-					CheckOut co = new CheckOut();
+					CheckOutView co = new CheckOutView();
 					System.out.println(id);
 					System.out.println(pwd);
 					co.setId(id);
@@ -196,7 +154,8 @@ public class LibrarysearchView extends JFrame {
 		});
 		
 		//뒤로 가기 버튼 기능
-		Button btnback = new Button("뒤로가기");
+		JButton btnback = new JButton("뒤로가기");
+		btnback.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
 		btnback.setBounds(674, 537, 100, 49);
 		frame.getContentPane().add(btnback);
 		
@@ -224,54 +183,61 @@ public class LibrarysearchView extends JFrame {
 		jtitle= (String) table.getValueAt(a, 0);
 		return jtitle;
 	}
+
+
 	
-	//전체 검색 후 ArrayList를 list 2차원 배열로 변환
-//	public Object[][] resultAll() {
-//		BookDAO bd = new BookDAO();
-//		Object[][] list;
-//
-//		data = bd.selectAll();
-//		list = new Object[data.size()][5];
-//
-//		System.out.println(data);
-//
-//		for (int i = 0; i < data.size(); i++) {
-//			for (int j = 0; j < 5; j++) {
-//				list[i][j] = data.get(i).getTitle();
-//				list[i][++j] = data.get(i).getAuthor();
-//				list[i][++j] = data.get(i).getPublisher();
-//				list[i][++j] = data.get(i).getGenre();
-//				list[i][++j] = data.get(i).getPublication_date();
-//			}
-//		}
-//		return list;
-//
-//	}
+	public void BookAllList() {
+		
+		BookSearchList bsl = new BookSearchList();
+		String[] header = { "도서 제목", "저자", "출판사", "장르", "출판일" };
+		result = bsl.resultAll();
+		model = new DefaultTableModel(result, header);
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setLayout(null);
+		table = new JTable(model);
+		table.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
+		table.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		sp = new JScrollPane(table);
+		sp.setBounds(0, 0, 760, 400);
+		panel.add(sp);
+		table.getTableHeader().setReorderingAllowed(false);
+		table.setModel(new DefaultTableModel(result, header) {
+			public boolean isCellEditable(int row, int column) {
+
+				return false;
+			}
+
+		});
+		
+	}
 	
-	//도서 제목 검색 후 ArrayList를 list 2차원 배열로 변환
-//	public Object[][] resultTitle() {
-//		BookDAO bd = new BookDAO();
-//		Object[][] list;
-//
-//		title = tfsearch.getText();
-//
-//		data = bd.selectTitle(title);
-//		list = new Object[data.size()][5];
-//
-//		System.out.println(data);
-//
-//		for (int i = 0; i < data.size(); i++) {
-//			for (int j = 0; j < 5; j++) {
-//				list[i][j] = data.get(i).getTitle();
-//				list[i][++j] = data.get(i).getAuthor();
-//				list[i][++j] = data.get(i).getPublisher();
-//				list[i][++j] = data.get(i).getGenre();
-//				list[i][++j] = data.get(i).getPublication_date();
-//			}
-//		}
-//		return list;
-//
-//	}
+	
+	public void BookselectList(String title) {
+		
+		BookSearchList bsl = new BookSearchList();
+		title = tfsearch.getText();
+		System.out.println(title);
+		result = null;
+		result = bsl.resultTitle(title);
+		String[] header = { "도서 제목", "저자", "출판사", "장르", "출판일" };
+		model = new DefaultTableModel(result, header);
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setLayout(null);
+		table = new JTable(model);
+		table.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
+		sp = new JScrollPane(table);
+		sp.setBounds(0, 0, 760, 400);
+		panel.add(sp);
+		table.getTableHeader().setReorderingAllowed(false);
+		table.setModel(new DefaultTableModel(result, header) {
+			public boolean isCellEditable(int row, int column) {
+				
+				return false;
+			}
+
+		});
+		
+	}
 	//마우스 클릭 메소드
 	public void Clicked() {
 		table.addMouseListener(new MouseListener() {

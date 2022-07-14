@@ -16,7 +16,7 @@ public class MemberDAO {
 	String password = "green1234";
 
 	private Connection con;
-	private PreparedStatement  pstmt;
+	private PreparedStatement pstmt;
 	private ResultSet rs;
 
 	// 1. insert ok
@@ -25,17 +25,16 @@ public class MemberDAO {
 		int result = 0;
 //		pstmt = null;
 //		rs = null;
-		
+
 		try {
 			connDB();
-		
+
 			String query;
 
 			query = "insert into MEMBERDATA(id, pwd, name,tel,email,birth,gender)";
 			query += " values(?,?,?,?,?,?,?)";
-			System.out.println(query);
 			pstmt = con.prepareStatement(query);
-			
+
 			pstmt.setString(1, vo.getId());
 			pstmt.setString(2, vo.getPwd());
 			pstmt.setString(3, vo.getName());
@@ -43,9 +42,7 @@ public class MemberDAO {
 			pstmt.setString(5, vo.getEmail());
 			pstmt.setString(6, vo.getBirth());
 			pstmt.setString(7, vo.getGender());
-			
-			
-			
+
 			result = pstmt.executeUpdate();
 
 			pstmt.close();
@@ -65,8 +62,8 @@ public class MemberDAO {
 		String query;
 
 		try {
-			
-			query = "update MEMBERDATA set pwd=?, tel=?,email=?";
+			connDB();
+			query = "update MEMBERDATA set pwd=?, tel=?,email=? ";
 			query += "where id=?";
 
 			pstmt = con.prepareStatement(query);
@@ -94,14 +91,12 @@ public class MemberDAO {
 
 			query = "delete MEMBERDATA where id=? and pwd=?";
 			pstmt = con.prepareStatement(query);
-			
+
 			pstmt.setString(1, id);
 			pstmt.setString(2, pw);
 
-
-
 			result = pstmt.executeUpdate();
-			
+
 			pstmt.close();
 			con.close();
 		} catch (SQLException e) {
@@ -113,17 +108,16 @@ public class MemberDAO {
 
 	// 4.selectAll
 
-	public List<MemberVo> getList() {
-		List<MemberVo> list = new ArrayList<MemberVo>();
+	public ArrayList<MemberVo> memberAllList() {
+		ArrayList<MemberVo> list = new ArrayList<MemberVo>();
 		String query;
 
 		try {
-			
-			query = "selet * from MEMBERDATA order by name";
+			connDB();
+			query = "select * from MEMBERDATA order by name";
 
 			pstmt = con.prepareStatement(query);
-			
-			
+
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -153,16 +147,15 @@ public class MemberDAO {
 	}
 
 	// 5.searchId
-	public List<MemberVo> getList(String id) {
+	public ArrayList<MemberVo> getIdLis(String id) {
 
-		List<MemberVo> lists = new ArrayList<MemberVo>();
+		ArrayList<MemberVo> list = new ArrayList<MemberVo>();
 		String query;
 
 		try {
-			
-			query = "select * from MEMBERDATA";
-			query = "where id =?";
-
+			connDB();
+			query = "select id, name, tel, email, birth, gender from  MEMBERDATA ";
+			query += "where id = ?";
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, id);
 
@@ -172,32 +165,33 @@ public class MemberDAO {
 				MemberVo mbv = new MemberVo();
 
 				mbv.setId(rs.getString("id"));
-				mbv.setPwd(rs.getString("pwd"));
 				mbv.setName(rs.getString("name"));
 				mbv.setTel(rs.getString("tel"));
 				mbv.setEmail(rs.getString("email"));
 				mbv.setBirth(rs.getString("birth"));
 				mbv.setGender(rs.getString("gender"));
-                  
-				lists.add(mbv);
+
+				list.add(mbv);
 			}
-			
+
 			rs.close();
 			pstmt.close();
-			
+			con.close();
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return lists;
+		return list;
 
 	}
-	//6. Login result 값 1로 반환하여 출력 ok
-	public int LoginData(String id,String pwd) {
+
+	// 6. Login result 값 1로 반환하여 출력 ok
+	public int LoginData(String id, String pwd) {
 		int result = 0;
 		String query;
-		
+
 		try {
 			con = null;
 			pstmt = null;
@@ -210,20 +204,19 @@ public class MemberDAO {
 
 			pstmt.setString(1, id);
 			pstmt.setString(2, pwd);
-			
+
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-			MemberVo mbv = new MemberVo();
-			String id1 = rs.getString("id");
-			String pwd1 = rs.getString("pwd");
-			mbv.setId(id1);
-			mbv.setPwd(pwd1);
+
+			while (rs.next()) {
+				MemberVo mbv = new MemberVo();
+				String id1 = rs.getString("id");
+				String pwd1 = rs.getString("pwd");
+				mbv.setId(id1);
+				mbv.setPwd(pwd1);
 			}
-			
+
 			result = pstmt.executeUpdate();
 			rs.close();
-			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -231,11 +224,12 @@ public class MemberDAO {
 		}
 		return result;
 	}
-	//아이디 중복 체크 ok
+
+	// 아이디 중복 체크 ok
 	public int idCheck(String id) {
 		int result = 0;
 		String query;
-		
+
 		try {
 			con = null;
 			pstmt = null;
@@ -247,20 +241,18 @@ public class MemberDAO {
 			pstmt = con.prepareStatement(query);
 
 			pstmt.setString(1, id);
-			
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) { 
-			MemberVo mbv = new MemberVo();
-			String id1 = rs.getString("id");
-			mbv.setId(id1);
-			
-			result = pstmt.executeUpdate();
+
+			if (rs.next()) {
+				MemberVo mbv = new MemberVo();
+				String id1 = rs.getString("id");
+				mbv.setId(id1);
+
+				result = pstmt.executeUpdate();
 			}
-			
+
 			rs.close();
-			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -269,18 +261,17 @@ public class MemberDAO {
 		return result;
 	}
 
-
 	public void connDB() {
 		try {
 
 			Class.forName(driver);
-			//System.out.println("jdbc.driver loading success");
+			// System.out.println("jdbc.driver loading success");
 
 			con = DriverManager.getConnection(url, user, password);
-			//System.out.println("oracle connection sucess.");
+			// System.out.println("oracle connection sucess.");
 
 			pstmt = con.prepareStatement(driver);
-			//System.out.println("statement create success");
+			// System.out.println("statement create success");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

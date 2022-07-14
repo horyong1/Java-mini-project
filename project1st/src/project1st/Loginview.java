@@ -2,23 +2,24 @@ package project1st;
 
 
 
-import java.awt.Button;
 import java.awt.Font;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 
 public class Loginview extends JFrame {
-	private TextField tfid;
-	private TextField passwordField;
+	private JTextField tfid;
+	private JPasswordField  passwordField;
 	private String id;
 	private String pwd;
 	/**
@@ -26,45 +27,49 @@ public class Loginview extends JFrame {
 	 */
 	public Loginview() {
 
-		
+//		mainView();
 
 	}
 	
 	public void mainView() {		
 	setTitle("\uB3C4\uC11C\uAD00 \uAD00\uB9AC \uD504\uB85C\uADF8\uB7A8");
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	setBounds(100, 100, 340, 230);
+	setBounds(100, 100, 354, 230);
 	getContentPane().setLayout(null);
 	
 	JLabel title = new JLabel("\uB85C\uADF8\uC778");
 	title.setFont(new Font("±º∏≤", Font.BOLD, 22));
-	title.setBounds(119, 10, 68, 26);
+	title.setBounds(140, 10, 68, 26);
 	getContentPane().add(title);
 	
 	JLabel lbid = new JLabel("\uC544\uC774\uB514");
-	lbid.setBounds(35, 79, 45, 15);
+	lbid.setFont(new Font("«‘√ ∑“µ∏øÚ", Font.PLAIN, 12));
+	lbid.setBounds(36, 89, 45, 15);
 	getContentPane().add(lbid);
 	
-	tfid = new TextField();
-	tfid.setBounds(92, 76, 116, 21);
+	tfid = new JTextField();
+	tfid.setBounds(93, 86, 116, 21);
 	getContentPane().add(tfid);
 	tfid.setColumns(10);
 	
 	JLabel lbpwd = new JLabel("\uD328\uC2A4\uC6CC\uB4DC");
-	lbpwd.setBounds(24, 118, 56, 15);
+	lbpwd.setFont(new Font("«‘√ ∑“µ∏øÚ", Font.PLAIN, 12));
+	lbpwd.setBounds(24, 130, 56, 15);
 	getContentPane().add(lbpwd);
 	
-	passwordField = new TextField();
-	passwordField.setBounds(92, 115, 116, 21);
+	passwordField = new JPasswordField ();
+	passwordField.setBounds(92, 127, 116, 21);
 	getContentPane().add(passwordField);
 	passwordField.setEchoChar('*');
 	
 	JRadioButton rbtnp = new JRadioButton("\uAC1C\uC778");
+	rbtnp.setFont(new Font("«‘√ ∑“µ∏øÚ", Font.PLAIN, 12));
 	rbtnp.setSelected(true);
 	rbtnp.setBounds(91, 42, 56, 23);
 	getContentPane().add(rbtnp);
 	
 	JRadioButton rbtna = new JRadioButton("\uAD00\uB9AC\uC790");
+	rbtna.setFont(new Font("«‘√ ∑“µ∏øÚ", Font.PLAIN, 12));
 	rbtna.setBounds(149, 42, 70, 23);
 	getContentPane().add(rbtna);
 	setVisible(true);
@@ -73,12 +78,16 @@ public class Loginview extends JFrame {
 	jg.add(rbtna);
 	jg.add(rbtnp);
 	
-	Button btnlogin = new Button("\uB85C\uADF8\uC778");
-	btnlogin.setBounds(224, 68, 76, 41);
+	JButton btnlogin = new JButton("\uB85C\uADF8\uC778");
+	btnlogin.setBackground(UIManager.getColor("Button.background"));
+	btnlogin.setFont(new Font("«‘√ ∑“µ∏øÚ", Font.PLAIN, 12));
+	btnlogin.setBounds(224, 72, 87, 48);
 	getContentPane().add(btnlogin);
 	
-	Button btnsignup = new Button("\uD68C\uC6D0\uAC00\uC785");
-	btnsignup.setBounds(224, 118, 76, 23);
+	JButton btnsignup = new JButton("\uD68C\uC6D0\uAC00\uC785");
+	btnsignup.setBackground(UIManager.getColor("Button.background"));
+	btnsignup.setFont(new Font("«‘√ ∑“µ∏øÚ", Font.PLAIN, 12));
+	btnsignup.setBounds(224, 126, 87, 23);
 	getContentPane().add(btnsignup);
 	
 	btnlogin.addActionListener(new ActionListener() {
@@ -102,7 +111,7 @@ public class Loginview extends JFrame {
 						JOptionPane.INFORMATION_MESSAGE);
 				
 				dispose();
-				new SelectView().selectview();
+				new AdminView().adminGui();
 				
 				
 			}else if((tfid.getText()==adminId && passwordField.getText()==adminPwd)
@@ -135,11 +144,11 @@ public class Loginview extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			dispose();
-			new Signupview();
+			new Signupview().SignupViewGui();;
 		}
 	});;
 	
-	
+	setLocation(700, 200);
 	setVisible(true);
 		
 	}

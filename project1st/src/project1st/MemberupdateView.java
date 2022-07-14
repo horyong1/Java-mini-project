@@ -1,35 +1,34 @@
 package project1st;
 
-import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class MemberupdateView extends JFrame {
 
-	private JFrame jf;
-	private int result = 2;
+	
 	private String id, pwd;
+	private ArrayList<MemberVo> data;
 
 	public MemberupdateView() {
-		MemberupdateViewGui();
+//		MemberupdateViewGui();
 
 	}
 
 	public void MemberupdateViewGui() {
+		
+		
 		setTitle("도서관 관리 프로그램");
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -37,102 +36,112 @@ public class MemberupdateView extends JFrame {
 		getContentPane().setLayout(null);
 		setBackground(Color.DARK_GRAY);
 
-		Button btncancel = new Button("취소");
+		JButton btncancel = new JButton("취소");
+		btncancel.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
 		btncancel.setBounds(185, 400, 97, 23);
 		getContentPane().add(btncancel);
 
 		JLabel lbid = new JLabel("아이디");
-		lbid.setBounds(69, 84, 48, 15);
+		lbid.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		lbid.setBounds(70, 100, 48, 15);
 		getContentPane().add(lbid);
 
 		JLabel lbpwd = new JLabel("비밀번호");
-		lbpwd.setBounds(59, 119, 58, 15);
+		lbpwd.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		lbpwd.setBounds(60, 135, 58, 15);
 		getContentPane().add(lbpwd);
 
 		JLabel lbpwdck = new JLabel("비밀번호 확인");
-		lbpwdck.setBounds(32, 157, 87, 15);
+		lbpwdck.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		lbpwdck.setBounds(33, 173, 87, 15);
 		getContentPane().add(lbpwdck);
 
 		JLabel lbname = new JLabel("이름");
-		lbname.setBounds(83, 195, 36, 15);
+		lbname.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		lbname.setBounds(84, 211, 36, 15);
 		getContentPane().add(lbname);
 
 		JLabel lbtel = new JLabel("전화번호");
-		lbtel.setBounds(59, 267, 58, 15);
+		lbtel.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		lbtel.setBounds(60, 283, 58, 15);
 		getContentPane().add(lbtel);
 
 		JLabel lbemail = new JLabel("이메일");
-		lbemail.setBounds(69, 302, 43, 15);
+		lbemail.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		lbemail.setBounds(70, 318, 43, 15);
 		getContentPane().add(lbemail);
 
-		JRadioButton rbtngender1 = new JRadioButton("남");
-		rbtngender1.setSelected(true);
-		rbtngender1.setBounds(147, 329, 48, 23);
-		getContentPane().add(rbtngender1);
-
-		JRadioButton rbtngender2 = new JRadioButton("여");
-		rbtngender2.setBounds(203, 329, 48, 23);
-		getContentPane().add(rbtngender2);
-
-		// 라디오 버튼 그룹 생성------------------
-		ButtonGroup bg = new ButtonGroup();
-		bg.add(rbtngender1);
-		bg.add(rbtngender2);
-
-		JLabel lbgender = new JLabel("성별");
-		lbgender.setBounds(81, 333, 36, 15);
-		getContentPane().add(lbgender);
-
 		JLabel lbtitle = new JLabel("회원정보 수정");
-		lbtitle.setFont(new Font("굴림", Font.BOLD, 25));
+		lbtitle.setFont(new Font("함초롬돋움", Font.BOLD, 25));
 		lbtitle.setBounds(79, 20, 168, 41);
 		getContentPane().add(lbtitle);
 
 		JLabel lbbirth = new JLabel("생년월일");
-		lbbirth.setBounds(59, 229, 58, 15);
+		lbbirth.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		lbbirth.setBounds(60, 245, 58, 15);
 		getContentPane().add(lbbirth);
 
-		TextField tfid = new TextField();
+		JTextField tfid = new JTextField();
+		tfid.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
 		tfid.setEditable(false);
-		tfid.setBounds(135, 80, 116, 23);
+		tfid.setBounds(137, 96, 116, 23);
 		getContentPane().add(tfid);
 
-		TextField passwordField = new TextField();
-		passwordField.setBounds(135, 115, 116, 23);
+		JPasswordField passwordField = new JPasswordField();
+		passwordField.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		passwordField.setBounds(137, 131, 116, 23);
 		getContentPane().add(passwordField);
 		passwordField.setEchoChar('*');
 
-		TextField passwordckField = new TextField();
-		passwordckField.setBounds(135, 153, 116, 23);
+		JPasswordField passwordckField = new JPasswordField();
+		passwordckField.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		passwordckField.setBounds(137, 169, 116, 23);
 		getContentPane().add(passwordckField);
 		passwordckField.setEchoChar('*');
 
-		TextField tfname = new TextField();
+		JTextField tfname = new JTextField();
+		tfname.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
 		tfname.setEditable(false);
-		tfname.setBounds(135, 189, 116, 23);
+		tfname.setBounds(137, 205, 116, 23);
 		getContentPane().add(tfname);
 
-		TextField tfbirth = new TextField();
+		JTextField tfbirth = new JTextField();
+		tfbirth.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
 		tfbirth.setEditable(false);
-		tfbirth.setBounds(135, 224, 116, 23);
+		tfbirth.setBounds(137, 240, 116, 23);
 		getContentPane().add(tfbirth);
 
-		TextField tftel = new TextField();
-		tftel.setBounds(135, 259, 116, 23);
+		JTextField tftel = new JTextField();
+		tftel.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		tftel.setBounds(137, 275, 116, 23);
 		getContentPane().add(tftel);
 
-		TextField tfemail = new TextField();
-		tfemail.setBounds(135, 294, 116, 23);
+		JTextField tfemail = new JTextField();
+		tfemail.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		tfemail.setBounds(137, 310, 116, 23);
 		getContentPane().add(tfemail);
+		
+		JButton btnok = new JButton("확인");
+		btnok.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		btnok.setBounds(47, 400, 97, 23);
+		getContentPane().add(btnok);
 
+		Object [][] info1 = searchID(id);
+		tfid.setText((String) info1[0][0]);
+		tfname.setText((String) info1[0][1]);
+		tftel.setText((String) info1[0][2]);
+		tfbirth.setText((String) info1[0][3]);
+		tfemail.setText((String) info1[0][4]);
 		
 		
 		
-		Button btnok = new Button("확인");
+		
+		//확인 버튼 기능
 		btnok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MemberDAO mbd = new MemberDAO();
 				MemberVo mbv = new MemberVo();
+				SelectView sv = new SelectView();
 				Effectiveness ef = new Effectiveness();
 				String pf = passwordField.getText();
 				String pfk = passwordckField.getText();
@@ -164,39 +173,33 @@ public class MemberupdateView extends JFrame {
 					JOptionPane.showMessageDialog(getContentPane(), "올바른 형식의 이메일을 입력하세요\n  예) asdf@naver.com",
 							"Message", JOptionPane.INFORMATION_MESSAGE);
 
-				} else if (result == 0) {
+				} else {
 
-					mbv.setId(tfid.getText());
 					mbv.setPwd(passwordField.getText());
-					mbv.setName(tfname.getText());
 					mbv.setTel(tftel.getText());
 					mbv.setEmail(tfemail.getText());
-					mbv.setBirth(tfbirth.getText());
-					if (rbtngender1.isSelected() == true) {
-						mbv.setGender(rbtngender1.getText());
-
-					} else if (rbtngender2.isSelected() == true) {
-						mbv.setGender(rbtngender2.getText());
+					mbv.setId(id);
+					int result = mbd.updateData(mbv);
+					if(result == 1) {
+						System.out.println(result);
+						JOptionPane.showMessageDialog(getContentPane(), "회원정보 수정이 완료되었습니다!", "Message",
+								JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(getContentPane(), "다시 로그인 해주세요", "Message",
+								JOptionPane.INFORMATION_MESSAGE);
+						sv.setId(id);
+						sv.setPwd(pwd);
+						dispose();
+						new Loginview().mainView();						
+					}else {
+						JOptionPane.showMessageDialog(getContentPane(), "회원정보 수정에 실패했습니다.", "Message",
+								JOptionPane.INFORMATION_MESSAGE);
+						
 					}
-
-					mbd.insertData(mbv);
-					JOptionPane.showMessageDialog(getContentPane(), "회원 가입이 완료되었습니다!", "Message",
-							JOptionPane.INFORMATION_MESSAGE);
-
-					dispose();
-					new Loginview().mainView();
 				}
 
 			}
 
 		});
-		
-		btnok.setBounds(47, 400, 97, 23);
-		getContentPane().add(btnok);
-
-		
-		
-		
 		
 		
 		// 취소버튼 기능---------------------------------------
@@ -213,10 +216,35 @@ public class MemberupdateView extends JFrame {
 
 			}
 		});
-
+		setLocation(700, 200);
 		setVisible(true);
 
 	}
+	
+	public Object[][] searchID(String id) {
+		MemberDAO md = new MemberDAO();
+		Object[][] list;
+		
+		data = md.getIdLis(id);
+		list = new Object[data.size()][5];
+
+		System.out.println(data);
+
+		for (int i = 0; i < data.size(); i++) {
+			for (int j = 0; j < 5; j++) {
+				list[i][j] = data.get(i).getId();
+				list[i][++j] = data.get(i).getName();
+				list[i][++j] = data.get(i).getTel();
+				list[i][++j] = data.get(i).getBirth();
+				list[i][++j] = data.get(i).getEmail();
+			}
+		}
+		return list;
+
+	}
+	
+	
+	
 
 	public String getId() {
 		return id;

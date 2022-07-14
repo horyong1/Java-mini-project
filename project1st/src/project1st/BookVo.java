@@ -1,8 +1,7 @@
 package project1st;
 
 public class BookVo {
-	private int book_id;
-	private int amount;
+
 	private String title;
 	private String author;
 	private String genre;
@@ -11,11 +10,34 @@ public class BookVo {
 	private String purchase_date;
 	private String checkout_date;
 	private String return_date;
+	private String amount;
 	private String id;
+	private String chtitle;
 
+	
+	
 	public BookVo() {
-
+		
 	}
+	
+	
+	public BookVo(String title, String author, String publisher, String genre, String publication_date,
+			String purchase_date, String amount ) {
+		super();
+		this.title = title;
+		this.author = author;
+		this.publisher = publisher;
+		this.genre = genre;
+		this.publication_date = publication_date;
+		this.purchase_date = purchase_date;
+		this.amount = amount;
+		
+	}
+
+
+
+	
+
 
 	public BookVo(String title, String author, String publisher, String genre, String publication_date) {
 
@@ -26,6 +48,8 @@ public class BookVo {
 		this.publication_date = publication_date;
 
 	}
+	
+	
 	public BookVo(String id, String title ,String author, String publisher, String checkout_date, String return_date) {
 		
 		this.id = id;
@@ -36,6 +60,7 @@ public class BookVo {
 		this.return_date = return_date;
 		
 	}
+	
 
 	public String getPublisher() {
 		return publisher;
@@ -53,19 +78,12 @@ public class BookVo {
 		this.publisher = publisher;
 	}
 
-	public int getBook_id() {
-		return book_id;
-	}
-
-	public void setBook_id(int book_id) {
-		this.book_id = book_id;
-	}
-
-	public int getAmount() {
+	
+	public String getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
 
@@ -124,6 +142,15 @@ public class BookVo {
 
 	public void setReturn_date(String return_date) {
 		this.return_date = return_date;
+	}
+	
+	public String getChtitle() {
+		return chtitle;
+	}
+
+
+	public void setChtitle(String chtitle) {
+		this.chtitle = chtitle;
 	}
 
 }

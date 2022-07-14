@@ -1,18 +1,17 @@
 package project1st;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Button;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Font;
 
 public class SelectView extends JFrame {
 
@@ -37,35 +36,44 @@ public class SelectView extends JFrame {
 	}
 
 	public SelectView() {
-		
+//		selectview();
 	}
 
 	public void selectview() {
 		JFrame frame = new JFrame("도서관 관리 프로그램");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 270, 307);
+		frame.setBounds(100, 100, 304, 374);
+		Dimension frameSize = this.getSize(); // 프레임 사이즈
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // 모니터 사이즈
+		frame.setLocation(700,200);
+		
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.setLayout(null);
 
-		Button btnsearch = new Button("도서 검색");
-		btnsearch.setBounds(30, 63, 188, 23);
+		JButton btnsearch = new JButton("도서 검색");
+		btnsearch.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		btnsearch.setBounds(50, 94, 188, 23);
 		panel.add(btnsearch);
 
-		Button btnupdate = new Button("회원 수정");
-		btnupdate.setBounds(30, 136, 188, 23);
+		JButton btnupdate = new JButton("회원 수정");
+		btnupdate.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		btnupdate.setBounds(50, 167, 188, 23);
 		panel.add(btnupdate);
 
-		Button btnreturn = new Button("도서 반납");
-		btnreturn.setBounds(30, 98, 188, 23);
+		JButton btnreturn = new JButton("도서 반납");
+		btnreturn.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		btnreturn.setBounds(50, 129, 188, 23);
 		panel.add(btnreturn);
 
-		Button btnwithdrawal = new Button("회원 탈퇴");
-		btnwithdrawal.setBounds(87, 230, 76, 23);
+		JButton btnwithdrawal = new JButton("회원 탈퇴");
+		btnwithdrawal.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		btnwithdrawal.setBounds(99, 286, 93, 23);
 		panel.add(btnwithdrawal);
 
-		Button btnout = new Button("로그 아웃");
-		btnout.setBounds(30, 173, 188, 23);
+		JButton btnout = new JButton("로그 아웃");
+		btnout.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		btnout.setBounds(50, 204, 188, 23);
 		panel.add(btnout);
 		
 		//도서 검색 기능
@@ -104,7 +112,7 @@ public class SelectView extends JFrame {
 				MemberupdateView mv = new MemberupdateView();
 				mv.setId(id);
 				mv.setPwd(pwd);
-				dispose();
+				frame.dispose();
 				mv.MemberupdateViewGui();
 			}
 		});;
@@ -158,8 +166,8 @@ public class SelectView extends JFrame {
 		frame.getContentPane().add(panel);
 		
 		JLabel lbtop = new JLabel("\uBA54\uB274 \uC120\uD0DD");
-		lbtop.setFont(new Font("굴림", Font.PLAIN, 24));
-		lbtop.setBounds(69, 10, 110, 35);
+		lbtop.setFont(new Font("함초롬돋움", Font.PLAIN, 24));
+		lbtop.setBounds(95, 23, 110, 35);
 		panel.add(lbtop);
 		frame.setVisible(true);
 	}
