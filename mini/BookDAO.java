@@ -353,7 +353,7 @@ public class BookDAO {
 		}
 		
 		//관리자 도서 대출 관리- 전체 목록 조회
-		public ArrayList<BookVo> adRetunAll(String combo) {
+		public ArrayList<BookVo> adRetunAll(int combo) {
 			ArrayList<BookVo> list = new ArrayList<BookVo>();
 			
 			String query;
@@ -366,8 +366,15 @@ public class BookDAO {
 						+" WHERE m.ID =c.ID AND c.title=bl.title "
 						+" ORDER BY ? ";
 				pstmt = con.prepareStatement(query);
-				
-				pstmt.setString(1, combo);
+				System.out.println(combo);
+				System.out.println(query);
+				if(combo==1) {
+					pstmt.setInt(1, 1);
+					
+				}else if(combo==2) {
+					pstmt.setInt(1, 2);
+					
+				}
 				
 				
 				rs = pstmt.executeQuery();
@@ -380,8 +387,6 @@ public class BookDAO {
 					String return_date=rs.getString("RETURN_DATE");
 					int late = rs.getInt("late");
 					
-//					System.out.println(title+" "+author+" "
-//							+publisher+" "+genre+" "+publication_date);
 					
 					list.add(new BookVo(id,title,author,publisher,checkout_date,return_date,late));
 				}
@@ -407,7 +412,7 @@ public class BookDAO {
 				query = "SELECT m.id, bl.title, bl.author, bl.publisher, "
 						+ "c.CHECKOUT_DATE, c.RETURN_DATE, GREATEST(TO_DATE(TO_CHAR(SYSDATE,'YYYY-MM-DD')) - TO_DATE(c.RETURN_DATE),0) late "
 						+ "FROM book_list bl, CHECKOUT c, MEMBERDATA m "
-						+ "WHERE m.id="+"'"+Id+"' and bl.title like "+"'%"+Title+"%' and "
+						+ "WHERE m.id="+"'"+Id+"' and bl.title like "+"'"+Title+"' and "
 						+ "m.ID = c.ID AND bl.TITLE = c.title "
 						+ "ORDER BY 2";
 				
@@ -438,6 +443,131 @@ public class BookDAO {
 				e.printStackTrace();
 			}
 			return list;
+		}
+		//관리자 도서 대출 관리 - 제목으로 검색
+		public ArrayList<BookVo> adreturnTitle(String Title){
+			ArrayList<BookVo> list = new ArrayList<BookVo>();
+			String query;
+			
+			
+			try {
+				connDB();
+				query = "SELECT m.id, bl.title, bl.author, bl.publisher, "
+						+ "c.CHECKOUT_DATE, c.RETURN_DATE, GREATEST(TO_DATE(TO_CHAR(SYSDATE,'YYYY-MM-DD')) - TO_DATE(c.RETURN_DATE),0) late "
+						+ "FROM book_list bl, CHECKOUT c, MEMBERDATA m "
+						+ "WHERE bl.title like "+"'%"+Title+"%' and "
+						+ "m.ID = c.ID AND bl.TITLE = c.title "
+						+ "ORDER BY 2";
+				
+				System.out.println(query);
+				con = DriverManager.getConnection(url, user, password);
+				stmt=con.createStatement();
+				rs= stmt.executeQuery(query);
+
+				while(rs.next()) {
+					String id=rs.getString("id");
+					String title=rs.getString("title");
+					String author=rs.getString("author");
+					String publisher=rs.getString("publisher");
+					String checkout_date=rs.getString("CHECKOUT_DATE");
+					String return_date=rs.getString("RETURN_DATE");
+					int late = rs.getInt("late");
+					
+					list.add(new BookVo(id,title,author,publisher,checkout_date,return_date,late));
+				}
+				
+				rs.close();
+				pstmt.close();
+				con.close();
+				
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return list;
+		}
+		
+		//관리자 도서 대출관리 - 아이디로 검색
+		public ArrayList<BookVo> adreturnid(String Id){
+			ArrayList<BookVo> list = new ArrayList<BookVo>();
+			String query;
+			
+			
+			try {
+				connDB();
+				query = "SELECT m.id, bl.title, bl.author, bl.publisher, "
+						+ "c.CHECKOUT_DATE, c.RETURN_DATE, GREATEST(TO_DATE(TO_CHAR(SYSDATE,'YYYY-MM-DD')) - TO_DATE(c.RETURN_DATE),0) late "
+						+ "FROM book_list bl, CHECKOUT c, MEMBERDATA m "
+						+ "WHERE m.id="+"'"+Id+"'" +" and "
+						+ "m.ID = c.ID AND bl.TITLE = c.title "
+						+ "ORDER BY 2";
+				
+
+				con = DriverManager.getConnection(url, user, password);
+				stmt=con.createStatement();
+				rs= stmt.executeQuery(query);
+
+				while(rs.next()) {
+					String id=rs.getString("id");
+					String title=rs.getString("title");
+					String author=rs.getString("author");
+					String publisher=rs.getString("publisher");
+					String checkout_date=rs.getString("CHECKOUT_DATE");
+					String return_date=rs.getString("RETURN_DATE");
+					int late = rs.getInt("late");
+					
+					list.add(new BookVo(id,title,author,publisher,checkout_date,return_date,late));
+				}
+				
+				rs.close();
+				pstmt.close();
+				con.close();
+				
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return list;
+		}
+		
+		public ArrayList<BookVo> adReturnLate() {
+			ArrayList<BookVo> list = new ArrayList<BookVo>();
+			
+			String query;
+			
+			try {
+				connDB();
+				query = "SELECT m.id,bl.title,bl.author,bl.publisher,c.checkout_date,c.RETURN_DATE,"
+						+"GREATEST(TO_DATE(TO_CHAR(SYSDATE,'YYYY-MM-DD')) - TO_DATE(c.RETURN_DATE),0) late "
+						+" FROM MEMBERDATA m ,CHECKOUT c,BOOK_LIST bl " 
+						+" WHERE m.ID =c.ID AND c.title=bl.title AND GREATEST(TO_DATE(TO_CHAR(SYSDATE,'YYYY-MM-DD')) - TO_DATE(c.RETURN_DATE),0) > 0"
+						+" ORDER BY 1 ";
+				pstmt = con.prepareStatement(query);
+				
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					String id=rs.getString("id");
+					String title=rs.getString("title");
+					String author=rs.getString("author");
+					String publisher=rs.getString("publisher");
+					String checkout_date=rs.getString("CHECKOUT_DATE");
+					String return_date=rs.getString("RETURN_DATE");
+					int late = rs.getInt("late");
+					
+					
+					list.add(new BookVo(id,title,author,publisher,checkout_date,return_date,late));
+				}
+				rs.close();
+				pstmt.close();
+				con.close();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return list; 
 		}
 		
 

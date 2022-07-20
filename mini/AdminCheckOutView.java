@@ -1,6 +1,5 @@
 package project1st;
 
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -20,11 +19,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.border.MatteBorder;
-import javax.swing.UIManager;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableModel;
+
+
+
 
 public class AdminCheckOutView extends JFrame {
 
@@ -68,10 +69,11 @@ public class AdminCheckOutView extends JFrame {
 	private JTextField tfinid;
 	private JTextField tfinlate;
 	private JComboBox comboBox;
-
+	private int comtext =1;
 	public AdminCheckOutView() {
-		mainGui();
+//		mainGui();
 	}
+	
 
 	public void mainGui() {
 
@@ -94,14 +96,14 @@ public class AdminCheckOutView extends JFrame {
 		frame.setVisible(true);
 
 		tfsearch = new JTextField();
-		tfsearch.setBounds(97, 99, 147, 21);
+		tfsearch.setBounds(112, 100, 147, 21);
 		frame.getContentPane().add(tfsearch);
 		tfsearch.setColumns(10);
 		tfsearch.setText("");
 
 		btnsearch = new JButton("검색");
 		btnsearch.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
-		btnsearch.setBounds(254, 98, 76, 23);
+		btnsearch.setBounds(267, 98, 76, 23);
 		frame.getContentPane().add(btnsearch);
 
 		lbtoptitle = new JLabel("도서 대출 관리");
@@ -222,16 +224,17 @@ public class AdminCheckOutView extends JFrame {
 		btnsendmail.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
 		btnsendmail.setBounds(173, 537, 133, 49);
 		frame.getContentPane().add(btnsendmail);
+		btnsendmail.setVisible(false);
 		
 		comboBox = new JComboBox();
 		comboBox.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "이름", "아이디" }));
-		comboBox.setBounds(12, 98, 73, 23);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] { "도서 제목", "아이디" }));
+		comboBox.setBounds(12, 98, 88, 23);
 		frame.getContentPane().add(comboBox);
 		combo = comboBox.getSelectedItem().toString();
 		
 
-		BookAllList();
+		BookAllList(comtext);
 		Clicked();
 
 		// 버튼 클릭시 검색(공백 검색 시 전체 목록 출력)
@@ -248,10 +251,17 @@ public class AdminCheckOutView extends JFrame {
 					tfinpublisher.setText("");
 					tfingenre.setText("");
 					tfinpublication_date.setText("");
-
 					
-					BookAllList();
-					Clicked();
+					if(combo.equals("도서 제목")) {
+						comtext=2;
+						BookAllList(comtext);
+						Clicked();
+					}else if(combo.equals("아이디")) {
+						comtext=1;
+						BookAllList(comtext);
+						Clicked();
+						
+					}
 					
 
 				} else if (!(tfsearch.getText().equals(""))) {
@@ -261,9 +271,17 @@ public class AdminCheckOutView extends JFrame {
 					tfingenre.setText("");
 					tfinpublication_date.setText("");
 
-				
-					listselet(tfsearch.getText());
-					Clicked();
+					if(combo.equals("도서 제목")) {
+						comtext=2;
+						BooktitleList(tfsearch.getText());
+						Clicked();
+					}else if(combo.equals("아이디")) {
+						comtext=1;
+						listselet(tfsearch.getText());
+						Clicked();
+						
+					}
+					
 
 				}
 
@@ -277,8 +295,9 @@ public class AdminCheckOutView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
-
+				panel.remove(sp);
+				BookLatelist();
+				Clicked();
 			}
 		});
 
@@ -310,12 +329,13 @@ public class AdminCheckOutView extends JFrame {
 		});
 
 	}
-
-	public void BookAllList() {
+	//도서 대출 목록 전체 조회
+	public void BookAllList(int com) {
 		combo = comboBox.getSelectedItem().toString();
 		BookListArr bsl = new BookListArr();
 		String[] header = { "아이디", "도서 제목", "저자", "출판사", "대출일", "반납일","연체일" };
-		result = bsl.adminReturnAll(combo);
+		System.out.println(com);
+		result = bsl.adminReturnAll(com);
 		model = new DefaultTableModel(result, header);
 		panel.setLayout(null);
 		table = new JTable(model);
@@ -333,6 +353,30 @@ public class AdminCheckOutView extends JFrame {
 
 		});
 	}
+	//도서 연체 목록
+	public void BookLatelist() {
+		combo = comboBox.getSelectedItem().toString();
+		BookListArr bsl = new BookListArr();
+		String[] header = { "아이디", "도서 제목", "저자", "출판사", "대출일", "반납일","연체일" };
+		result = bsl.adminReturnLate();
+		model = new DefaultTableModel(result, header);
+		panel.setLayout(null);
+		table = new JTable(model);
+		table.setFont(new Font("함초롬돋움", Font.PLAIN, 12));
+		sp = new JScrollPane(table);
+		sp.setBounds(0, 0, 1034, 400);
+		panel.add(sp);
+		table.getTableHeader().setReorderingAllowed(false);
+		table.setModel(new DefaultTableModel(result, header) {
+			
+			public boolean isCellEditable(int row, int column) {
+				
+				return false;
+			}
+			
+		});
+	}
+	
 	public void BooktitleList(String title){
 		//BookDAO bd = new BookDAO();
 		BookListArr bsl = new BookListArr();
@@ -340,7 +384,7 @@ public class AdminCheckOutView extends JFrame {
 		title = tfsearch.getText();
 		System.out.println(title);
 		result = null;
-		result = bsl.returnTitle(id, title);
+		result = bsl.adminReturntitleSelect(title);
 		String[] header = { "아이디", "도서 제목", "저자", "출판사", "대출일", "반납일","연체일" };
 		model = new DefaultTableModel(result, header);
 		panel.setLayout(null);
@@ -358,13 +402,13 @@ public class AdminCheckOutView extends JFrame {
 		});
 	}
 
-	public void listselet(String name) {
+	public void listselet(String id) {
 
 		BookListArr bsl = new BookListArr();
-		name = tfsearch.getText();
-		System.out.println(name);
+		id = tfsearch.getText();
+		System.out.println(id);
 		result = null;
-		result = bsl.adminTitle(name);
+		result = bsl.adminReturnidSelect(id);
 		String[] header = { "아이디", "도서 제목","저자","출판사","대출일","반납일","연체일"  };
 		model = new DefaultTableModel(result, header);
 		panel.setLayout(null);
@@ -416,7 +460,15 @@ public class AdminCheckOutView extends JFrame {
 					tfinpublisher.setText((String) infolist[0][3]);
 					tfingenre.setText((String) infolist[0][4]);
 					tfinpublication_date.setText((String) infolist[0][5]);
-					tfinlate.setText((String)infolist[0][6]+"일");		
+					Object late = infolist[0][6];
+					String lt = Integer.toString((int) late);
+					if(lt.equals("0")) {
+						tfinlate.setText("");		
+						
+					}else {
+						tfinlate.setText(lt+"일");	
+						
+					}
 							
 					
 					

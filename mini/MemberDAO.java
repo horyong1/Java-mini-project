@@ -45,6 +45,7 @@ public class MemberDAO {
 
 			result = pstmt.executeUpdate();
 
+			
 			pstmt.close();
 			con.close();
 
@@ -74,6 +75,11 @@ public class MemberDAO {
 			pstmt.setString(4, vo.getId());
 
 			result = pstmt.executeUpdate();
+			
+			
+			pstmt.close();
+			con.close();
+			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -100,6 +106,12 @@ public class MemberDAO {
 
 			result = pstmt.executeUpdate();
 
+			
+			
+			
+			pstmt.close();
+			con.close();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
